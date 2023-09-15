@@ -1,0 +1,13 @@
+<h1>Plan Name: <%= @plan_model.name %></h1>
+
+<p>Plan data: <%= @plan_model.data %></p>
+
+<ul>
+  <li><%= link_to "Edit raw data (Admin or Debug use only)", edit_admin_path(@plan_model) %></li>
+  <li><%= link_to "Enter draw panel", edit_plan_model_path(@plan_model) %></li>
+  <li><%= link_to "Destroy", plan_model_path(@plan_model), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+                  
+</ul>

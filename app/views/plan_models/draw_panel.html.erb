@@ -1,0 +1,83 @@
+  <!DOCTYPE html>
+  <head>
+	<link rel="stylesheet" href="/newplan.css" media="screen">
+  </head>
+<div class="container u-palette-2-base" id="container">
+	<div class="overlay">
+		<div class="overlay-panel overlay-right">
+			<h1>Create a New Plan</h1>
+			<p>Welcome to PLANXT a tool to setup an event venue – all furniture and staff placements chronologically, and track the actual setup progress real-time.
+				Let’s get started.. </p>				
+				<%= form_with model: @plan_model do |form| %>
+				  <div>
+				    <%= form.label :name, "Plan Name", :class => "label" %>
+				    <%= form.text_field :name,:required => 'required', :class => "input_big" %>
+				  </div>
+				  <h3>Event Days: Setup through Breakdown</h3>
+				 <div>
+					<p1>Start Adding steps by clicking Add Steps</p1>
+				</div>
+			    <table style="width:775px">
+				<tr>
+				  <th rowspan="2" style="width:75px;height: 10px;"><p5>Start Day</p5>  </th>
+				  <th rowspan="2" style="width:55px;height: 10px;"><p5>StartTime </p5> </th>
+				  <th rowspan="2" style="width:55px;height: 10px;"><p5>EndTime  </p5></th>
+				  <th colspan="2" style="width:105px;height: 10px;"><p5>Break1 (Optional)  </p5></th>
+				  <th colspan="2" style="width:105px;height: 10px;"><p5>Break2 (Optional) </p5></th>
+				  <th rowspan="2" style="width:65px;height: 10px;"><p5>Delete  </p5></th>
+				</tr>
+				<tr>
+				  <th><p5>StartTime  </p5></th>
+				  <th><p5>EndTime  </p5></th>
+				  <th><p5>StartTime </p5></th>
+				  <th><p5>EndTime  </p5></th>
+				</tr>
+			    </table>
+				<div>
+					<%= form.fields_for :event_steps do |f| %>
+					<%= render 'event_step_fields', f: f%>
+					<% end %>
+					<%= link_to_add_fields "Add Steps",form, :event_steps %>
+			    </div>
+
+				<div> &nbsp</div>
+				
+              <div>
+                  <h2>Dimensions of the Venue (approximate): &nbsp
+                  <%= form.select :scale, ["Feet", "Meter"], :selected =>  @extra1_dict["scale"] %>
+                  &nbsp 
+                  Length:&nbsp
+                  <%= form.number_field :length, value:  @extra1_dict["length"],:class => "input_small" %> &nbsp 
+                  Width:&nbsp
+                  <%= form.number_field :width,value:  @extra1_dict["width"], :class => "input_small" %> &nbsp </h2>
+              </div>
+				  <div>
+				    <%= form.submit "OPEN PLAN TEMPLATE", :class => "submit_button" %>
+				  </div>
+				<% end %>
+
+				<script>
+
+				$('form').on('click', '.remove-fields', function(event) {
+				  console.log('clicked')
+					$(this).prev('input[type=hidden]').val('1');
+					$(this).closest('div').hide();
+					return event.preventDefault();
+				  });
+				
+				$('form').on('click', '.add_fields', function(event) {
+					console.log('clicked!')
+					 var regexp, time;
+					 time = new Date().getTime();
+					 regexp = new RegExp($(this).data('id'), 'g');
+					 $(this).before($(this).data('fields').replace(regexp, time));
+					 return event.preventDefault();
+					});
+				</script>
+
+				
+
+
+</div>
+</div>
+</div>

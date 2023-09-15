@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>edit_page</title>
+    <link rel="stylesheet" href="/nicepage.css" media="screen">
+<link rel="stylesheet" href="/edit_page.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/jquery-1.9.1.min.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.9.1, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/default-logo.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="edit_page">
+    <meta property="og:type" content="website">
+  </head>
+  <body class="u-body u-xl-mode">
+
+    <section class="u-align-center u-clearfix u-section-1" id="sec-a1df">
+      
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-expanded-width u-table u-table-responsive u-table-1">
+                  <h3 class="u-headline u-text u-text-default u-text-1">
+          <a href="/">Plan Models Management</a>
+        </h3>
+        <div> &nbsp </div>
+          <table class="u-table-entity u-table-entity-1">
+            <colgroup>
+              <col width="20%">
+              <col width="20%">
+              <col width="20%">
+              <col width="20%">
+              <col width="20%">
+            </colgroup>
+            <thead class="u-custom-font u-font-courier-new u-palette-1-base u-table-header u-table-header-1">
+              <tr style="height: 59px;">
+                <th class="u-table-cell">Name</th>
+                <th class="u-table-cell">Owner</th>
+                <th class="u-table-cell">Created</th>
+                <th class="u-table-cell">Updated</th>
+                <th class="u-table-cell">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="u-table-body">
+              <% @plan_model.each do |plan_model| %>
+                <tr style="height: 47px;">
+                  <td class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-table-cell"> <%= plan_model.name %> </td>
+                  <td class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-table-cell"> <%= @user.find(plan_model.creator).name %> </td>
+                  <td class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-table-cell"> <%= plan_model.created_at.to_formatted_s(:long) %> </td>
+                  <td class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-table-cell"> <%= plan_model.updated_at.to_formatted_s(:long) %> </td>
+                  <td class="u-border-1 u-border-grey-30 u-border-no-left u-border-no-right u-table-cell u-layout-row"> 
+                  <%= link_to "Edit", "#{plan_model_path(plan_model)}/edit", target: "_blank", :class => " u-layout-cell"%> |
+                  <%= link_to "Manage", "#{plan_model_path(plan_model)}/draw_panel", :class => " u-layout-cell"%> |
+                  <%= link_to "Export", "#{plan_model_path(plan_model)}/export", target: "_blank", :class => " u-layout-cell"%> | 
+                  <%= link_to "Share", "#{plan_model_path(plan_model)}/sharing", :class => " u-layout-cell"%>
+                  <%= link_to "Copy", "#{plan_model_path(plan_model)}/duplicate" , :class => " u-layout-cell"%>
+                  <%= link_to "Delete", "#{plan_model_path(plan_model)}/destroy", :class => " u-layout-cell"%>
+                  </td>
+                </tr>
+              <% end %>
+
+            </tbody>
+          </table>
+        </div>
+        <h4 class="u-text u-text-default u-text-1"> Total <%= @plan_model.count %> plans</h4>
+        <%= link_to "Create a new plan", new_plan_model_path, :class=>"u-btn u-button-style u-btn-1 u-hover-palette-2-base" %>
+        <div>
+          <%= form_with url: "/import", multipart: true do |f| %>
+            <%= f.file_field :upload, :class => "u-layout-cell" %>
+            <%= f.submit "Import an existing plan", :class => "u-btn u-button-style u-btn-1 u-hover-palette-2-base u-layout-cell" %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+    
+    
+  </body>
+</html>
